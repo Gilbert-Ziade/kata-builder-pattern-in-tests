@@ -26,7 +26,8 @@ public class ShopTest {
 
     @Test
     public void happy_path() {
-        final User user = new User("Bob", "bob@domain.tld", 25, true, fsfAddress);
+        final User user = new UserBuilder()
+                .build();
 
         assertTrue(Shop.canOrder(user));
         assertFalse(Shop.mustPayForeignFee(user));
@@ -34,21 +35,27 @@ public class ShopTest {
 
     @Test
     public void minors_cannot_order_from_shop() {
-        final User user = new User("Bob", "bob@domain.tld", 16, true, fsfAddress);
 
+        final User user = new UserBuilder()
+                .withAge(16)
+                .build();
         assertFalse(Shop.canOrder(user));
     }
 
     @Test
     public void must_be_verified_to_order_from_shop() {
-        final User user = new User("Bob", "bob@domain.tld", 16, false, fsfAddress);
+        final User user = new UserBuilder()
+                .withVerified(false)
+                .build();
 
         assertFalse(Shop.canOrder(user));
     }
 
     @Test
     public void foreigners_must_pay_foreign_fee() {
-        final User user = new User("Bob", "bob@domain.tld", 25, false, parisAddress);
+        final User user = new UserBuilder()
+                .withAddress(parisAddress)
+                .build();;
 
         assertTrue(Shop.mustPayForeignFee(user));
     }
