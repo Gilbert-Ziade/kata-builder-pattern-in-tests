@@ -37,7 +37,7 @@ public class ShopTest {
     public void minors_cannot_order_from_shop() {
 
         final User user = new UserBuilder()
-                .withAge(16)
+                .isMinor()
                 .build();
         assertFalse(Shop.canOrder(user));
     }
@@ -55,7 +55,7 @@ public class ShopTest {
     public void foreigners_must_pay_foreign_fee() {
         final User user = new UserBuilder()
                 .withAddress(parisAddress)
-                .build();;
+                .build();
 
         assertTrue(Shop.mustPayForeignFee(user));
     }

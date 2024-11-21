@@ -28,6 +28,11 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder isMinor() {
+        this.age = 15;
+        return this;
+    }
+
     public UserBuilder withVerified(boolean verified) {
         this.verified = verified;
         return this;
